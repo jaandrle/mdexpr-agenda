@@ -1,3 +1,5 @@
+**WIP – currently under investigation!**
+
 # mdexpr-agenda
 Use extended markdown syntax to simulate `org-agenda` from emacs.
 
