@@ -1,4 +1,7 @@
 #!/usr/bin/env node
 
-require = require('esm')(module /*, options*/);
-require('../src/mdexpr').cli(process.argv);
+const requireESM = require('esm')(module /*, options*/);
+const { fromCLI }= requireESM('../src/mdexpr');
+
+const data= fromCLI(process.argv);
+console.log(data);

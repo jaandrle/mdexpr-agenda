@@ -4,7 +4,7 @@
 	"description": "Use extended markdown syntax to simulate `org-agenda` from emacs.",
 	"main": "index.js",
 	"bin": {
-		"mdexpr-agenda": "bin/mdexpr-agenda"
+		"mdexpr-agenda": "bin/mdexpr-agenda.js"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +18,15 @@
 	"license": "MIT",
 	"dependencies": {
 		"esm": "^3.2.25"
+	},
+	"jshintConfig": {
+		"esversion": 11,
+		"node": "true",
+		"module": true,
+		"undef": "true",
+		"latedef": "true",
+		"maxparams": 4,
+		"maxdepth": 3,
+		"maxcomplexity": 17
 	}
 }
