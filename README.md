@@ -39,7 +39,7 @@ This is only rough estimate and **also syntax test**.
 {NEXT **<2022-08-31>** *phase1* agenda}$
 
 - [ ] mdexpr syntax
-	- [ ] import another file
+	- [ ] ? import another file
 	- [ ] `{… somethig}$` recognition
 - [ ] agenda syntax
 	- [ ] line + following line wrapped by `{… agenda}$` (agenda line, **AL** for short)
@@ -59,13 +59,13 @@ This is only rough estimate and **also syntax test**.
 ## VIM
 {TODO <2022-09-24> *phase1* agenda}$
 
-- [ ] changing[^prepinani]
+- [ ] simplify changing values[^prepinani]
 - [ ] helpers for dates
 - [ ] `gh`/`gd`
 - [ ] another helpers
 
-## Synchronization with calendars (google)
-{TODO *faze2* agenda}$
+## ? Synchronization with calendars (google)
+{TODO *phase2* agenda}$
 
 
 [^prepinani]: For example TODO/NEXT/DONE
@@ -74,5 +74,5 @@ This is only rough estimate and **also syntax test**.
 Syntax: include another document, include “plugin” and settings.
 
 - {require [test](./test.md) mdexpr}$
-- {use [agenda](plugin url) with states=TODO,NEXT|DONE mdexpr}$
+- {use [agenda](plugin-url) with states=TODO,NEXT|DONE mdexpr}$
 </details>
