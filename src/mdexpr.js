@@ -14,12 +14,13 @@ export function mdexpr(pkg, listeners){
 	program.name(pkg.name)
 		.version(pkg.version, "-v, --version")
 		.description(pkg.description);
-	program.command("files <file(s)>", { isDefault: true })
+	program.command("files [file(s)]", { isDefault: true })
 		.summary("[default] process markdown file(s).")
 		.description("Process expressions in markdown file(s).")
 		.option("--json", "output as json")
 		.action(function(arg, options){
-			if(options.json) return console.log("here");
+			if(typeof arg === "undefined") arg= ".";
+			if(options.json) return console.log("here", arg);
 			
 			event("onfiles", arg);
 		});
