@@ -13,10 +13,10 @@ const no_listener= Symbol.for("no_listener");
  * */
 export function mdexpr(listeners){
 	const event= listenerPrepare(listeners);
-	event("ontodo", "", listeners);
+	event("ontodo", "");
 	const args= process.argv.slice(2);
 
-	event("oncli", args, listeners);
+	event("oncli", args);
 }
 
 /**
