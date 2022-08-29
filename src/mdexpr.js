@@ -1,22 +1,30 @@
+import { program } from "commander";
 /**
  * @typedef T_State
- * @type {"ontodo"|"onfile"|"oncli"}
+ * @type {"onfiles"|"oncli"}
  * */
-/**
- * @typedef T_Listeners
- * @type {Record<T_State,(data: any)=> void>}
- * */
-const no_listener= Symbol.for("no_listener");
 /**
  * Main cli function for all `mdexpr-*` commands.
+ * @param {Record<"name"|"version"|"description", "string">} pkg
  * @param {T_Listeners} listeners Events listeners
  * */
-export function mdexpr(listeners){
+export function mdexpr(pkg, listeners){
 	const event= listenerPrepare(listeners);
-	event("ontodo", "");
-	const args= process.argv.slice(2);
-
-	event("oncli", args);
+	
+	program.name(pkg.name)
+		.version(pkg.version, "-v, --version")
+		.description(pkg.description);
+	program.command("files <file(s)>", { isDefault: true })
+		.summary("[default] process markdown file(s).")
+		.description("Process expressions in markdown file(s).")
+		.option("--json", "output as json")
+		.action(function(arg, options){
+			if(options.json) return console.log("here");
+			
+			event("onfiles", arg);
+		});
+	
+	program.parse();
 }
 
 /**
@@ -30,7 +38,10 @@ function listenerPrepare(listeners){
 	* @param {any} data
 	* */
 	return function(name, data){
-		if(!Reflect.has(listeners, name)) return no_listener;
-		return listeners[name](data);
+		if(Reflect.has(listeners, name))
+			return listeners[name](data);
+
+		console.log("Not implemented yet");
+		process.exit(1);
 	};
 }
