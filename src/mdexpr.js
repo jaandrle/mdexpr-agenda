@@ -12,19 +12,25 @@ const no_listener= Symbol.for("no_listener");
  * @param {T_Listeners} listeners Events listeners
  * */
 export function mdexpr(listeners){
-	lister("ontodo", "", listeners);
+	const event= listenerPrepare(listeners);
+	event("ontodo", "", listeners);
 	const args= process.argv.slice(2);
 
-	lister("oncli", args, listeners);
+	event("oncli", args, listeners);
 }
 
 /**
  * Helper function calling given event handler in `listeners`.
- * @param {T_State} name
  * @param {T_Listeners} listeners
- * @param {any} data
  * */
-function lister(name, data, listeners){
-	if(!Reflect.has(listeners, name)) return no_listener;
-	return listeners[name](data);
+function listenerPrepare(listeners){
+	/**
+	* Helper function calling given event handler in `listeners`.
+	* @param {T_State} name
+	* @param {any} data
+	* */
+	return function(name, data){
+		if(!Reflect.has(listeners, name)) return no_listener;
+		return listeners[name](data);
+	};
 }
