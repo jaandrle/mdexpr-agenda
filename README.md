@@ -73,6 +73,6 @@ This is only rough estimate and **also syntax test**.
 <details><summary>mdexpr</summary>
 Syntax: include another document, include “plugin” and settings.
 
-- {require [test](./test.md) mdexpr}$
+- {include [test](./test.md) mdexpr}$
 - {use [agenda](plugin-url) with states=TODO,NEXT|DONE mdexpr}$
 </details>
