@@ -3,8 +3,9 @@
 	"version": "1.0.0",
 	"description": "Use extended markdown syntax to simulate `org-agenda` from emacs.",
 	"main": "index.js",
+	"type": "module",
 	"bin": {
-		"mdexpr-agenda": "bin/mdexpr-agenda.js"
+		"mdexpr-agenda": "bin/mdexpr-agenda.mjs"
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
@@ -12,13 +13,11 @@
 	"keywords": [
 		"cli",
 		"markdown",
+		"mdexpr",
 		"org"
 	],
 	"author": "Jan Andrle <andrle.jan@centrum.cz>",
 	"license": "MIT",
-	"dependencies": {
-		"esm": "^3.2.25"
-	},
 	"jshintConfig": {
 		"esversion": 11,
 		"node": "true",
