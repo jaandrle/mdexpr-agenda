@@ -49,14 +49,14 @@ This is only rough estimate and **also syntax test**.
 	- [x] italic texts are labels
 	- [x] line before **AL** is the name of agenda item
 
-## CLI
+### CLI
 {TODO <2022-09-10> *phase1* agenda}$
 
 - [ ] print agenda items
 - [ ] filter options
 - [ ] configuration[^prepinani]
 
-## VIM
+### VIM
 {TODO <2022-09-24> *phase1* agenda}$
 
 - [ ] simplify changing values[^prepinani]
@@ -64,7 +64,7 @@ This is only rough estimate and **also syntax test**.
 - [ ] `gh`/`gd`
 - [ ] another helpers
 
-## ? Synchronization with calendars (google)
+### ? Synchronization with calendars (google)
 {TODO *phase2* agenda}$
 
 
@@ -74,5 +74,5 @@ This is only rough estimate and **also syntax test**.
 Syntax: include another document, include “plugin” and settings.
 
 - {include [test](./test.md) mdexpr}$
-- {use [agenda](plugin-url) with states=TODO,NEXT|DONE mdexpr}$
+- {use [agenda](https://github.com/jaandrle/mdexpr-agenda) with states=TODO,NEXT|DONE mdexpr}$
 </details>
