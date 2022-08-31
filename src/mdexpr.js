@@ -31,6 +31,8 @@ export { cli, cli_mdexpr };
 export function mdexpr(files_path= "./*.md"){
 	const ast_arr= [];
 	const files= glob.sync(files_path);
+	if(!files.length) throw new Error(`File(s) '${files_path}' not found.`);
+	
 	for(const file of files)
 		push.call(ast_arr, astPerFile(file));
 	let ast= ast_arr.reduce(function(out, curr){

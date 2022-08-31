@@ -9,24 +9,33 @@ cli_mdexpr
 	.option("--f_states [filter_states]", "[0] To filter specific states. Use name list separated by comma or 0/1 for todo/done agenda idems.")
 	.option("--f_dates [filter_dates]", "[ft] To filter dates. Use exact dates list separated by comma or key words [p]ast/[f]uture/[t]oday.")
 	.action(function(files, options){
-		const ast= mdexpr(files);
-		options= Object.assign(options_default, useOptions(use_param, "./README.md", ast), options);
-		const [ now_date, now_rest ]= (new Date()).toISOString().split("T");
-		const data= dataPrepare(now_date, ast[use_param].map(mdexprAgenda).filter(filterStates(options))).filter(filterDates(now_date, options));
-		
-		const out= outPrepare(data);
-		if(options.grep) return grep(data, out, options.grep);
+		try{
+			const ast= mdexpr(files);
+			options= Object.assign(options_default, useOptions(use_param, "./README.md", ast), options);
+			const [ now_date ]= (new Date()).toISOString().split("T");
+			const data= dataPrepare(now_date, ast[use_param].map(mdexprAgenda).filter(filterStates(options))).filter(filterDates(now_date, options));
+			
+			const out= outPrepare(data, now_date);
+			if(options.grep) return grep(data, out, options.grep);
 
-		log(`Today ${now_date}`);
-		out.forEach(l=> log(l));
+			log(`Today ${now_date}`);
+			out.forEach(l=> log(l));
+		} catch(err){
+			log(String(err));
+			process.exit(1);
+		}
 	});
 
-function outPrepare(data){
+function outPrepare(data, now_date){
 	const out_max= [];
 	const out_arr= [];
 	let i= 0, o;
 	for(const { name, labels, state, date_next, deadline } of data){
 		o= []; out_arr.push(o); i= 0;
+		let exlamation= "·  ".split("");
+		if(deadline && deadline<now_date) exlamation[2]= "!";
+		if(date_next<=now_date) exlamation[1]= "·";
+		sideAppend(exlamation.join(""));
 		sideAppend(state);
 		sideAppend(date_next);
 		sideAppend(deadline ? deadline : "-");
@@ -36,7 +45,7 @@ function outPrepare(data){
 	const t= "\t";
 	const out= [];
 	for(const out_line of out_arr){
-		out.push(t+out_line.map((v, i)=> v.padEnd(out_max[i], " ")).join(t));
+		out.push(out_line.map((v, i)=> v.padEnd(out_max[i], " ")).join(t));
 	}
 	return out;
 	
@@ -73,9 +82,14 @@ function dataPrepare(now_date, data){
 		return dn_a>dn_b ? 1 : -1;
 	});
 }
-function filterDates(now_date, { f_dates }){
+function filterDates(now_date, { f_dates, states }){
 	if(typeof f_dates==="undefined") f_dates= "ft";
-	if(f_dates==="ft") return ({ date_next })=> now_date<=date_next;
+	if(f_dates==="ft"){
+		states= states.split("|")[0];
+		return function todo({ date_next, state }){
+			return now_date<=date_next || states.indexOf(state)!==-1;
+		};
+	}
 	if(f_dates==="f") return ({ date_next })=> now_date<date_next;
 	if(f_dates==="p") return ({ date_next })=> now_date>date_next;
 	
