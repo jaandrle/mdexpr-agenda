@@ -35,7 +35,7 @@ export function mdexpr(files_path= "./*.md"){
 	
 	for(const file of files)
 		push.call(ast_arr, astPerFile(file));
-	let ast= ast_arr.reduce(function(out, curr){
+	const ast= ast_arr.reduce(function(out, curr){
 		Object.keys(curr).forEach(function(key){
 			if(!Reflect.has(out, key)) out[key]= [];
 			push.apply(out[key], curr[key]);

@@ -11,9 +11,10 @@ cli_mdexpr
 	.action(function(files, options){
 		try{
 			const ast= mdexpr(files);
+			const ast_agenda= ast[use_param] || [];
 			options= Object.assign(options_default, useOptions(use_param, "./README.md", ast), options);
 			const [ now_date ]= (new Date()).toISOString().split("T");
-			const data= dataPrepare(now_date, ast[use_param].map(mdexprAgenda).filter(filterStates(options))).filter(filterDates(now_date, options));
+			const data= dataPrepare(now_date, ast_agenda.map(mdexprAgenda).filter(filterStates(options))).filter(filterDates(now_date, options));
 			
 			const out= outPrepare(data, now_date);
 			if(options.grep) return grep(data, out, options.grep);
