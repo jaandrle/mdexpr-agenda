@@ -1,14 +1,18 @@
 // ast ⇒ abstract syntax tree
-import { program as cli } from "commander";
-import { log } from "console";
+import { program as cli, Option } from "commander";
+export { Option } from "commander";
 import { readFileSync } from "fs";
+import { join } from "path";
 import glob from "glob";
 const { push }= Array.prototype;
 const reverseText= text=> text.split("").reverse().join("");
 
-const pkg= JSON.parse(readFileSync("./package.json"));
+const [ pkg_name, ...pkg_root ]= process.argv[1].split("bin/").reverse();
+const pkg= readJSONFileSync(...pkg_root, "lib", "node_modules", pkg_name, "package.json");
+const syntax_version= pkg?.mdexpr?.version || "0.0";
+const syntax_supported= Number(/\d+\.\d+/.exec(syntax_version)[0])<=0.5;
 cli.name(pkg.name)
-	.version(pkg.version, "-v, --version")
+	.version(pkg.version+", syntax ("+(syntax_supported?"":"un")+"supported): "+syntax_version, "-v, --version")
 	.description([
 		"mdexpr-*",
 		"\tThese commands works with markdown files with additional `mdexpr` syntax (see [1]).",
@@ -28,7 +32,9 @@ const cli_mdexpr= cli.command("files [file(s)]", { isDefault: true })
 
 export { cli, cli_mdexpr };
 
-export function mdexpr(files_path= "./*.md"){
+export function mdexpr(files_path){
+	if(!syntax_supported) throw new Error(`Non-supported syntax version '${syntax_version}' requested. Contact program developer(s).`);
+	if(!files_path || files_path===".") files_path= "./*.md";
 	const ast_arr= [];
 	const files= glob.sync(files_path);
 	if(!files.length) throw new Error(`File(s) '${files_path}' not found.`);
@@ -53,6 +59,10 @@ export function useOptions(use, file, ast){
 			Reflect.set(acc, ...curr.split("="));
 			return acc;
 		}, {});
+}
+export function readJSONFileSync(...path){
+	path= path.length === 1 ? path[0].split("/") : path;
+	return JSON.parse(readFileSync(join.apply(null, path)));
 }
 
 function astPerFile(file){
