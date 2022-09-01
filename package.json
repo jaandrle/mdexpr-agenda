@@ -1,10 +1,20 @@
 {
 	"name": "mdexpr-agenda",
 	"version": "0.5.0",
+	"author": "Jan Andrle <andrle.jan@centrum.cz>",
+	"license": "MIT",
+	"description": "Use extended markdown syntax to simulate `org-agenda` from emacs.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jaandrle/mdexpr-agenda.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jaandrle/mdexpr-agenda/issues"
+	},
+	"homepage": "https://github.com/jaandrle/mdexpr-agenda",
 	"mdexpr": {
 		"version": "0.5.0"
 	},
-	"description": "Use extended markdown syntax to simulate `org-agenda` from emacs.",
 	"main": "index.js",
 	"type": "module",
 	"bin": {
@@ -20,8 +30,6 @@
 		"agenda",
 		"org"
 	],
-	"author": "Jan Andrle <andrle.jan@centrum.cz>",
-	"license": "MIT",
 	"jshintConfig": {
 		"esversion": 11,
 		"node": "true",

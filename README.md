@@ -6,22 +6,22 @@ For motivation and/or more information about `mdexpr` syntax visits
 [jaandrle/mdexpr: Use extended markdown syntax inspired by Org mode from emacs.](https://github.com/jaandrle/mdexpr).
 
 ## Example
-So from markdown document:
-```markdown
-…
-
-## Task
-{TODO <2022-08-29> *label* agenda}$
-
-Some other text
-
-…
-```
-…the `mdexpr-agenda` prints into terminal:
+This README.md dokument uses it! See section [Roadmap](#roadmap).
+By calling `mdexpr-agenda README.md` on 2022-09-01 you see in terminal:
 ```terminal
-Today:
-- TODO Task *label*
+—————                                           —————— FUTURE ———————————————————————————————   ——————
+#1 +    NEXT    2022-09-05      2022-09-10      - [ ] recurring dates                           phase1
+#2 +    NEXT    2022-09-10      2022-09-10      - [ ] recurring dates                           phase1
+#3 +    NEXT    2022-09-10      2022-09-10      ### CLI                                         phase1
+#4 +    TODO    2022-09-24      -               ### VIM                                         phase1
+#5 +    TODO    tbd             -               ### ? Synchronization with calendars (google)   phase2
 ```
+
+## Instalation
+**For now experiment!!!**
+
+1. you need nodejs >=v17.0.1 ⇒ folows [nvm-sh/nvm: Node Version Manager](https://github.com/nvm-sh/nvm)[^node]
+1. `npm install https://github.com/jaandrle/mdexpr-agenda --global`
 
 ## Roadmap v0.5.x
 This is only rough estimate and **also syntax test**.
@@ -61,3 +61,8 @@ This is [mdexpr](https://github.com/jaandrle/mdexpr) syntax. This document uses:
 - {use [agenda](https://github.com/jaandrle/mdexpr-agenda) with states=TODO,NEXT|DONE mdexpr}$
 
 </details>
+
+[node]: Alternatively
+```bash
+	curl -sL install-node.vercel.app/17.0.1 | bash
+```
