@@ -9,12 +9,14 @@ For motivation and/or more information about `mdexpr` syntax visits
 This README.md dokument uses it! See section [Roadmap](#roadmap).
 By calling `mdexpr-agenda README.md` on 2022-09-01 you see in terminal:
 ```terminal
-—————                                           —————— FUTURE ———————————————————————————————   ——————
+—————                                           —————— FUTURE ————————————————————————————————— ——————
 #1 +    NEXT    2022-09-05      2022-09-10      - [ ] recurring dates                           phase1
-#2 +    NEXT    2022-09-10      2022-09-10      - [ ] recurring dates                           phase1
-#3 +    NEXT    2022-09-10      2022-09-10      ### CLI                                         phase1
-#4 +    TODO    2022-09-24      -               ### VIM                                         phase1
-#5 +    TODO    tbd             -               ### ? Synchronization with calendars (google)   phase2
+#2 +    NEXT    2022-09-05      2022-09-10      - [ ] remove limitation for first founded file  phase1
+#3 +    NEXT    2022-09-10      2022-09-10      - [ ] recurring dates                           phase1
+#4 +    NEXT    2022-09-10      2022-09-10      - [ ] remove limitation for first founded file  phase1
+#5 +    NEXT    2022-09-10      2022-09-10      ### CLI                                         phase1
+#6 +    TODO    2022-09-24      -               ### VIM                                         phase1
+#7 +    TODO    tbd             -               ### ? Synchronization with calendars (google)   phase2
 ```
 
 ## Instalation
