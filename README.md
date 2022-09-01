@@ -2,61 +2,45 @@
 
 # mdexpr-agenda
 Use extended markdown syntax to simulate `org-agenda` from emacs.
-
-## Motivation
-There is [Org mode for Emacs](https://orgmode.org/) and specially [Org-Agenda](http://www.cachestocaches.com/2016/9/my-workflow-org-agenda/).
-But it can be useful to bring some features (e.g. agenda) into markdown documents.
-This is because, for example, `README.md` documents are already used on GitHub.
+For motivation and/or more information about `mdexpr` syntax visits
+[jaandrle/mdexpr: Use extended markdown syntax inspired by Org mode from emacs.](https://github.com/jaandrle/mdexpr).
 
 ## Example
-So from markdown document:
-```markdown
-…
-
-## Task
-{TODO <2022-08-29> *label* agenda}$
-
-Some other text
-
-…
-```
-…the `mdexpr-agenda` prints into terminal:
+This README.md dokument uses it! See section [Roadmap](#roadmap).
+By calling `mdexpr-agenda README.md` on 2022-09-01 you see in terminal:
 ```terminal
-Today:
-- TODO Task *label*
+—————                                           —————— FUTURE ———————————————————————————————   ——————
+#1 +    NEXT    2022-09-05      2022-09-10      - [ ] recurring dates                           phase1
+#2 +    NEXT    2022-09-10      2022-09-10      - [ ] recurring dates                           phase1
+#3 +    NEXT    2022-09-10      2022-09-10      ### CLI                                         phase1
+#4 +    TODO    2022-09-24      -               ### VIM                                         phase1
+#5 +    TODO    tbd             -               ### ? Synchronization with calendars (google)   phase2
 ```
 
-## Syntax rules
-The idea is that the markdown document should be readable primarily by people, therefore:
+## Instalation
+**For now experiment!!!**
 
-1. Syntax should be as minimal as possible and use already existing markdown syntax
-1. Technical texts should by on the end of line/document
+1. you need nodejs >=v17.0.1 ⇒ folows [nvm-sh/nvm: Node Version Manager](https://github.com/nvm-sh/nvm)[^node]
+1. `npm install https://github.com/jaandrle/mdexpr-agenda --global`
 
-## Roadmap
+## Roadmap v0.5.x
 This is only rough estimate and **also syntax test**.
 
-### Syntax
-{NEXT **<2022-08-31>** *phase1* agenda}$
+### Sytax
+{DONE **<2022-09-01>** *phase1* agenda}$
 
-- [ ] mdexpr syntax
-	- [ ] ? import another file
-	- [ ] `{… somethig}$` recognition
-- [ ] agenda syntax
-	- [ ] line + following line wrapped by `{… agenda}$` (agenda line, **AL** for short)
-	- [ ] dates (times) are wrapped inside **AL** by `<>` and it is possible to define more than one (use as reminders)
-		- [ ] there can by only one bold, representing *deadline*
-		- [ ] format `%Y-%m-%d[ %H:%M]` (basic), or `%Y-%m-%d[ %H:%M] rNj` (`N` integer, `j` y/m/d repeating)
-	- [x] italic texts are labels
-	- [x] line before **AL** is the name of agenda item
+### CLI
+{NEXT **<2022-09-10>** *phase1* agenda}$
 
-## CLI
-{TODO <2022-09-10> *phase1* agenda}$
-
-- [ ] print agenda items
+- [x] split `mdexpr` and `mdexpr-agenda` {DONE **<2022-09-01>** *phase1* agenda}$
+- [x] print agenda items {DONE **<2022-09-01 12:00>** *phase1* agenda}$
 - [ ] filter options
-- [ ] configuration[^prepinani]
+	- [x] dates, states
+	- [ ] labels
+- [x] configuration[^prepinani]
+- [ ] recurring dates {NEXT <2022-09-05> **<2022-09-10>** *phase1* agenda}$
 
-## VIM
+### VIM
 {TODO <2022-09-24> *phase1* agenda}$
 
 - [ ] simplify changing values[^prepinani]
@@ -64,15 +48,17 @@ This is only rough estimate and **also syntax test**.
 - [ ] `gh`/`gd`
 - [ ] another helpers
 
-## ? Synchronization with calendars (google)
+### ? Synchronization with calendars (google)
 {TODO *phase2* agenda}$
 
 
 [^prepinani]: For example TODO/NEXT/DONE
+[^node]: Alternatively `curl -sL install-node.vercel.app/17.0.1 | bash`
 
-<details><summary>mdexpr</summary>
-Syntax: include another document, include “plugin” and settings.
+<details>
+<summary>`{… cmd}$` explanation</summary>
 
-- {require [test](./test.md) mdexpr}$
-- {use [agenda](plugin-url) with states=TODO,NEXT|DONE mdexpr}$
+This is [mdexpr](https://github.com/jaandrle/mdexpr) syntax. This document uses:
+- {use [agenda](https://github.com/jaandrle/mdexpr-agenda) with states=TODO,NEXT|DONE mdexpr}$
+
 </details>
