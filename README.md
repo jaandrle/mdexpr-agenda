@@ -86,6 +86,30 @@ This is only rough estimate and **also syntax test**.
 - [ ] `gh`/`gd`
 - [ ] another helpers
 
+<details>
+<summary>workaround</summary>
+
+```vim
+function! s:mdexpr_agenda(file) abort
+	let c_file= a:file!='%' ? a:file : expand('%')
+	let s_makeprg= &l:makeprg
+	let s_errorformat= &l:errorformat
+	let &l:makeprg= 'mdexpr-agenda '.c_file.' --grep'
+	let &l:errorformat= '%f:%l:%m'
+	silent lmake
+	silent redraw!
+	let &l:makeprg= s_makeprg
+	let &l:errorformat= s_errorformat
+	lopen
+endfunction
+command -nargs=* MDEXPRagenda if <q-args>!='' | call <sid>mdexpr_agenda(<f-args>) | elseif &filetype=='markdown' | call <sid>mdexpr_agenda('%') | else | call <sid>mdexpr_agenda('*.md') | endif
+command MDEXPRclose lclose | lexpr []
+" call scommands#map('m', 'MDEXPR', "n") "see https://github.com/jaandrle/vim-scommands
+```
+
+</details>
+
+
 ### ? Synchronization with calendars (google)
 {TODO *phase2* agenda}$
 
