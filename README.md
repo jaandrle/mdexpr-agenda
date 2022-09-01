@@ -43,15 +43,15 @@ to define multiple open states for both types separated by commas.
 - Agenda title (inline) {STATUS <datetime-reminder> **<datetime-deadline>** *label* agenda}$
 ```
 
-- STATUS: this defines open/close status (see `states` above) and it can be used for filtering.
-- <datetime-reminder>: this supports `%Y-%m-%d[ %H:%M][ r…]` syntax (`[…]` marks optional part)
+- `STATUS`: this defines open/close status (see `states` above) and it can be used for filtering.
+- `<datetime-reminder>`: this supports `%Y-%m-%d[ %H:%M][ r…]` syntax (`[…]` marks optional part)
 	- `%Y-%m-%d` stands for date in the form *full\_year-month-day*  (month/day should be two digits: `01, 02, …, 10, …, 31`)
 	- `%M:%M` stands for time *hour:minute* (again two digits)
 	- `r…` stands for recurring date, in the form `rNM` (`N` positive number/intiger, `M` measurement such as `d`=day/`m`=month/`y`=day)
 		- dates are limited by `%Y-%m-%d[ %H:%M]` to `**<datetime-deadline>**`
 	- <datetime-reminder> can be used multiple times
-- **<datetime-deadline>**: deadline in the form `%Y-%m-%d[ %H:%M]`, it is possible to use only one deadline
-- *label*: this can be used to filtering (TBD), can be used multiple times
+- `**<datetime-deadline>**`: deadline in the form `%Y-%m-%d[ %H:%M]`, it is possible to use only one deadline
+- `*label*`: this can be used to filtering (TBD), can be used multiple times
 - for title in block syntax only one line is supported (filtered)
 
 ## Instalation
