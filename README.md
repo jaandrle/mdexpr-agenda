@@ -34,6 +34,7 @@ This is only rough estimate and **also syntax test**.
 
 - [x] split `mdexpr` and `mdexpr-agenda` {DONE **<2022-09-01>** *phase1* agenda}$
 - [x] print agenda items {DONE **<2022-09-01 12:00>** *phase1* agenda}$
+- [ ] remove limitation for first founded file {NEXT <2022-09-05> **<2022-09-10>** *phase1* agenda}$
 - [ ] filter options
 	- [x] dates, states
 	- [ ] labels

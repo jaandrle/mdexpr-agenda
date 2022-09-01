@@ -13,7 +13,7 @@ cli_mdexpr
 		try{
 			const ast= mdexpr(files);
 			const ast_agenda= ast[use_param] || [];
-			options= Object.assign(options_default, useOptions(use_param, "./README.md", ast), options);
+			options= Object.assign(options_default, useOptions(use_param, ast_agenda[0].file, ast), options);
 			const [ now_date, now_time ]= (new Date()).toISOString().split("T");
 			const data= dataPrepare(ast_agenda.map(mdexprAgenda).filter(filterStates(options))).filter(filterDates(now_date, options));
 			
