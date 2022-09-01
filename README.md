@@ -53,10 +53,7 @@ This is only rough estimate and **also syntax test**.
 
 
 [^prepinani]: For example TODO/NEXT/DONE
-[^node]: Alternatively
-```bash
-	curl -sL install-node.vercel.app/17.0.1 | bash
-```
+[^node]: Alternatively `curl -sL install-node.vercel.app/17.0.1 | bash`
 
 <details>
 <summary>`{… cmd}$` explanation</summary>
