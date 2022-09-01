@@ -53,6 +53,10 @@ This is only rough estimate and **also syntax test**.
 
 
 [^prepinani]: For example TODO/NEXT/DONE
+[^node]: Alternatively
+```bash
+	curl -sL install-node.vercel.app/17.0.1 | bash
+```
 
 <details>
 <summary>`{… cmd}$` explanation</summary>
@@ -61,8 +65,3 @@ This is [mdexpr](https://github.com/jaandrle/mdexpr) syntax. This document uses:
 - {use [agenda](https://github.com/jaandrle/mdexpr-agenda) with states=TODO,NEXT|DONE mdexpr}$
 
 </details>
-
-[node]: Alternatively
-```bash
-	curl -sL install-node.vercel.app/17.0.1 | bash
-```
