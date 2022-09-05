@@ -40,12 +40,12 @@ cli_mdexpr
 			process.exit(1);
 		}
 		function logPeriod(title, line, now_date){
-			const { round }= Math;
+			const { round, max }= Math;
 			const cols= line.split("\t");
 			for(let c of Object.keys(cols)){
 				let col= " ";
 				if(c==4){
-					const bars= "—".repeat((round(cols[c].length / 8)));
+					const bars= "—".repeat(max(round(cols[c].length / 8), 1));
 					const c_title= bars+" "+title+" ";
 					col= c_title+"—".repeat(cols[c].length-c_title.length);
 				} else if(c==2&&title==="TODAY"){
@@ -73,7 +73,7 @@ function outPrepare(data, now_date, now_time){
 		sideAppend(state);
 		sideAppend(date_next.split("T").join(" "));
 		sideAppend(deadline ? deadline : "-");
-		sideAppend(name.split("\n")[0].replace(/\t/g, "» "));
+		sideAppend(name[0].replace(/\t/g, "» "));
 		sideAppend(labels.join(","));
 	}
 	const t= "\t";
