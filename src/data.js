@@ -38,10 +38,10 @@ export function dataPrepare(data){
 		return dn_a>dn_b ? 1 : -1;
 	});
 }
-export function filterDates(now_date, { f_dates, states }){
+export function filterDates(now_date, fileOptions, { f_dates, file }){
 	if(typeof f_dates==="undefined") f_dates= "T";
 	if(f_dates==="T"){
-		states= states.split("|")[1];
+		const states= fileOptions(file).states.split("|")[1];
 		return function todo({ date_next, state }){
 			return now_date<=date_next || states.indexOf(state)===-1;
 		};
@@ -55,7 +55,8 @@ export function filterDates(now_date, { f_dates, states }){
 		return f_dates.indexOf(date_next)!==-1;
 	};
 }
-export function filterStates({ states, f_states }){
+export function filterStates(fileOptions, { f_states, file }){
+	const states= fileOptions(file).states;
 	if(typeof f_states==="undefined") f_states= 0;
 	if(!isNaN(Number(f_states))) f_states= states.split("|")[f_states];
 	f_states= f_states.split(",");

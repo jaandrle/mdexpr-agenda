@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 import { log } from "console";
-import { cli, cli_mdexpr, mdexpr, useOptions, Option } from "mdexpr";
+import { cli, cli_mdexpr, mdexpr, useOptions, Option, readJSONFileSync } from "mdexpr";
 import { outPrepare, logPeriod } from "../src/output.js";
 import { dataPrepare, mdexprAgenda, filterStates, filterDates } from "../src/data.js";
-const use_param= "https://github.com/jaandrle/mdexpr-agenda";
+import { pipe } from "../src/utils.js";
+import { join } from "path";
+
+const repo_dir= join(decodeURI((new URL(import.meta.url)).pathname), '..', '..');
+const use_param= readJSONFileSync(repo_dir, "package.json").homepage;
 const options_default= { states: "TODO,NEXT|DONE" };
 
 cli_mdexpr
@@ -12,12 +16,18 @@ cli_mdexpr
 	.option("--f_dates [filter_dates]", "to filter dates. Use exact dates list separated by comma or key word [p]ast/[f]uture/[t]oday/[T]ODO. (default: \"T\")")
 	.addOption(new Option("--verbose [level]", "modify printing (technical) info.").choices([ "no", "debug" ]).default("no"))
 	.action(function(files, options){
+		//#region …
 		try{
 			const ast= mdexpr(files);
 			const ast_agenda= ast[use_param] || [];
-			options= Object.assign(options_default, useOptions(use_param, ast_agenda[0].file, ast), options);
+			const fileOptions= filesOptions(use_param, ast);
 			const [ now_date, now_time ]= (new Date()).toISOString().split("T");
-			const data= dataPrepare(ast_agenda.map(mdexprAgenda).filter(filterStates(options))).filter(filterDates(now_date, options));
+			const data= pipe(
+				v=> v.map(mdexprAgenda),
+				v=> v.filter(filterStates(fileOptions, options)),
+				dataPrepare,
+				v=> v.filter(filterDates(now_date, fileOptions, options))
+			)(ast_agenda);
 			
 			const out= outPrepare(data, now_date, now_time);
 			if(options.grep) return grep(data, out, options.grep);
@@ -28,7 +38,7 @@ cli_mdexpr
 				const sl= line[state_ch];
 				if(s!==sl){
 					if(s===" "&&sl==="-") logPeriod("PAST", line_h, now_date);
-					if(s==="-"||s===" "&&sl==="*") logPeriod("TODAY", line_h, now_date);
+					if(s==="-"||s===" "&&sl!=="-") logPeriod("TODAY", line_h, now_date);
 					if(sl==="+") logPeriod("FUTURE", line_h, now_date);
 					s= sl;
 				}
@@ -41,21 +51,49 @@ cli_mdexpr
 			else log(String(err));
 			process.exit(1);
 		}
+		//#endregion
 	});
-
+cli.command("get <file> [type]")
+	.summary("returns a list of options, … based on `type`")
+	.description("For now only `options` is allowed as `type` ⇒ returns options (after `use … with` part).")
+	.option("--json", "output in JSON format")
+	.addOption(new Option("--verbose [level]", "modify printing (technical) info.").choices([ "no", "debug" ]).default("no"))
+	.action(function(file, _, { json: is_json= false, verbose= "no" }= {}){
+		//#region …
+		try{
+			const config= filesOptions(use_param, mdexpr(file))(file);
+			if(!is_json){
+				log(config);
+				process.exit(0);
+			}
+			pipe(
+				JSON.stringify,
+				log
+			)(config);
+		} catch(err){
+			if(verbose==="debug") log(err.stack);
+			else log(String(err));
+			process.exit(1);
+		}
+		//#endregion
+	});
 cli.command("vim")
-	.summary("(temporal|todo) just help text for using in vim")
-	.description("Just help text for using in VIM")
+	.summary("returns snippets to be used in your VIM config")
+	.description("Inside your `~/.vim/after/markdown/mdexpr.vim` use `execute \"source \".system(\"mdexpr-agenda vim 2> /dev/null\")`")
 	.action(function(){
-		log([
-			"setlocal makeprg=mdexpr-agenda\\ --grep",
-			"setlocal errorformat=%f:%l:%m",
-			"… `.vim/compiler/markdown.vim` + CompilerSet"
-		].join("\n"));
+		log(join(repo_dir, "vim", "index.vim"));
 	});
-
 cli.parse();
 
+function filesOptions(use_param, ast){
+	const cache= new Map();
+	return function fileOptions(file){
+		if(cache.has(file)) return cache.get(file);
+		const found= Object.assign(options_default, useOptions(use_param, file, ast));
+		cache.set(file, found);
+		return found;
+	};
+}
 function grep(data, out, options){
 	if(options===true) options= "Hn";
 	data.map(function({ line, file }, i){
